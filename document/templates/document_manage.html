@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Management</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Document Management</h1>
+
+        <!-- Search Form -->
+        <form method="GET" action="" class="search-form">
+            <input type="text" name="q" placeholder="Search documents..." class="search-input">
+            <button type="submit" class="btn">Search</button>
+        </form>
+
+        <!-- Document List -->
+        <ul class="document-list">
+            {% for document in documents %}
+                <li class="document-item">
+                    <div class="document-info">
+                        <a href="{% url 'download_document' document.id %}" download class="document-title">{{ document.title }}</a>
+                        <p class="document-description">{{ document.description }}</p>
+                        <p class="document-stats">
+                            Downloads: {{ document.downloads }} | Emails Sent: {{ document.emails_sent }}
+                        </p>
+                    </div>
+                    <div class="email-form">
+                        <form method="POST" action="{% url 'document_list' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="document_id" value="{{ document.id }}">
+                            <input type="email" name="email" placeholder="Recipient Email" required class="email-input">
+                            <button type="submit" class="btn">Send</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Upload Form -->
+        <div class="upload-form">
+            <h2>Upload a Document</h2>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'document_list' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">Upload</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

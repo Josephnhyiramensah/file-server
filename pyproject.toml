@@ -1,0 +1,18 @@
+[project]
+name = "my_django_project"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Josephnhyiramensah", email = "139984393+Josephnhyiramensah@users.noreply.github.com"},
+]
+dependencies = [
+    "django>=5.0.6",
+    "django-allauth>=0.63.3",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
